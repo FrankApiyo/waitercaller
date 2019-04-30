@@ -48,14 +48,26 @@ class Table(db.Model):
     number = db.Column(db.Text(), nullable=False, unique=True)
     email = db.Column(db.Text(), nullable=False)
     url = db.Column(db.Text())
-
+    
     def __init__(self, number, email, url):
         self.number = number 
         self.email = email 
         self.url = url
 
     def __repr__(self):
-        return "\n<Table number: {}\n email: {}\n url: {}\n>".format(number, email, url)
+        return "\n<Table number: {}\n email: {}\n url: {}\n>".format(self.number, self.email, self.url)
+
+class Request(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    table_number = db.Column(db.Text(), nullable=False, unique=True)
+    time = db.Column(db.Time(), nullable=False)
+
+    def __init__(self, table, time):
+        self.table = table
+        self.time = time
+
+    def __repr__(self):
+        return "\n<Request id: {}\n table: {} \n time: {}\n>".format(self.id, self.table, self.time)
 
 
 @app.route("/")
@@ -154,6 +166,9 @@ def account_deletable():
 @app.route("/newrequest/<tid>")
 def new_request(tid):
     #add request id and datetime.datetime.now() to db
+    request = Request(tid, datetime.datetime.now())
+    db.session.add(request)
+    db.session.save()
     return "your request has been logged and a waiter will be with you shortly"
 
 if __name__ == "__main__":
