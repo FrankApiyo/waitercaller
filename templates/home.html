@@ -5,6 +5,7 @@
   <link rel="stylesheet" type="text/css" href="./static/home.css">
 </head>
 <body>
+  {% block header %}
   <div class="header">
     <h1 id="logo"><span>HOME<span></h1>
     <form id="sign_in" action="login" method="POST">
@@ -13,6 +14,8 @@
       <input type="submit">
     </form>
   </div>
+  {% endblock %}
+  {% block body %}
   <div class="top">
     <h1>Waiter Caller</h1>
     <p>Your patrons can call their waiter anytime, using only their phone</p>
@@ -39,6 +42,7 @@
         <input type="submit" value="register">
       </form>
     </div>
+    {% endblock %}
   </div>
   <div class="footer">
     Frankline made this
